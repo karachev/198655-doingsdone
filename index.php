@@ -109,9 +109,6 @@ $show_complete_tasks = rand(0, 1);
                             </td>
                         </tr>
                     <? endif ?>
-                    <tr>
-
-                    </tr>
                 </table>
             </main>
         </div>
