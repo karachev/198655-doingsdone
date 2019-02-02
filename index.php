@@ -15,37 +15,37 @@ $tasks = [
         'name' => 'Собеседование в IT компании',
         'date' => '01.12.2019',
         'category' => 'Работа',
-        'done' => false,
+        'is_done' => false,
     ],
     [
         'name' => 'Выполнить тестовое задание',
         'date' => '25.12.2019',
         'category' => 'Работа',
-        'done' => false,
+        'is_done' => false,
     ],
     [
         'name' => 'Сделать задание первого раздела',
         'date' => '21.12.2019',
         'category' => 'Учеба',
-        'done' => true,
+        'is_done' => true,
     ],
     [
         'name' => 'Встреча с другом',
         'date' => '22.12.2019',
         'category' => 'Входящие',
-        'done' => false,
+        'is_done' => false,
     ],
     [
         'name' => 'Купить корм для кота',
         'date' => null,
         'category' => 'Домашние дела',
-        'done' => false,
+        'is_done' => false,
     ],
     [
         'name' => 'Заказать пиццу',
         'date' => null,
         'category' => 'Домашние дела',
-        'done' => false,
+        'is_done' => false,
     ],
 ];
 ?>
@@ -131,8 +131,8 @@ $tasks = [
 
                 <table class="tasks">
                     <?php foreach ($tasks as $key => $task): ?>
-                        <? if (!$task['done'] && !$show_complete_tasks): ?>
-                            <tr class="tasks__item task <?= $task['done'] ? 'task--completed' : ''; ?>">
+                        <? if (!$task['is_done'] && !$show_complete_tasks): ?>
+                            <tr class="tasks__item task <?= $task['is_done'] ? 'task--completed' : ''; ?>">
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox"
