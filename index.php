@@ -1,6 +1,6 @@
 <?php
 // показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
+$showCompleteTasks = rand(0, 1);
 
 $projects = [
     "Входящие",
@@ -15,49 +15,49 @@ $tasks = [
         'name' => 'Собеседование в IT компании',
         'date' => '01.12.2019',
         'category' => 'Работа',
-        'is_done' => false,
+        'isDone' => false,
     ],
     [
         'name' => 'Выполнить тестовое задание',
         'date' => '25.12.2019',
         'category' => 'Работа',
-        'is_done' => false,
+        'isDone' => false,
     ],
     [
         'name' => 'Сделать задание первого раздела',
         'date' => '21.12.2019',
         'category' => 'Учеба',
-        'is_done' => true,
+        'isDone' => true,
     ],
     [
         'name' => 'Встреча с другом',
         'date' => '22.12.2019',
         'category' => 'Входящие',
-        'is_done' => false,
+        'isDone' => false,
     ],
     [
         'name' => 'Купить корм для кота',
         'date' => null,
         'category' => 'Домашние дела',
-        'is_done' => false,
+        'isDone' => false,
     ],
     [
         'name' => 'Заказать пиццу',
         'date' => null,
         'category' => 'Домашние дела',
-        'is_done' => false,
+        'isDone' => false,
     ],
 ];
 
 function get_project_count($tasks, $project) {
-    $project_count = 0;
+    $tasksCount = 0;
     foreach ($tasks as $key => $task) {
-        if ($task['category'] == $project) {
-            $project_count++;
+        if ((string)$task['category'] === (string)$project) {
+            $tasksCount++;
         }
     }
 
-    return $project_count;
+    return $tasksCount;
 }
 ?>
 <!DOCTYPE html>
@@ -135,15 +135,15 @@ function get_project_count($tasks, $project) {
                     </nav>
 
                     <label class="checkbox">
-                        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <? if ($show_complete_tasks == 1): ?>checked<? endif ?>>
+                        <input class="checkbox__input visually-hidden show_completed" type="checkbox" <? if ((integer)$showCompleteTasks === 1): ?>checked<? endif ?>>
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
 
                 <table class="tasks">
                     <?php foreach ($tasks as $key => $task): ?>
-                        <? if (!$task['is_done'] || $show_complete_tasks): ?>
-                            <tr class="tasks__item task <?= $task['is_done'] ? 'task--completed' : ''; ?>">
+                        <? if (!$task['isDone'] || $showCompleteTasks): ?>
+                            <tr class="tasks__item task <?= $task['isDone'] ? 'task--completed' : ''; ?>">
                                 <td class="task__select">
                                     <label class="checkbox task__checkbox">
                                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox"
