@@ -16,8 +16,7 @@ function include_template($name, $data){
     return $result;
 }
 
-function get_project_count($tasks, $project)
-{
+function get_project_count($tasks, $project) {
     $tasksCount = 0;
     foreach ($tasks as $key => $task) {
         if ((string)$task['category'] === (string)$project) {
@@ -26,4 +25,12 @@ function get_project_count($tasks, $project)
     }
 
     return $tasksCount;
+}
+
+function check_task_date($taskDate) {
+    $formatUNIX = strtotime($taskDate);
+    $currentDate = time();
+    $diff = $formatUNIX - $currentDate;
+
+    return floor($diff / 3600) < 24;
 }
