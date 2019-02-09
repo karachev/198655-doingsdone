@@ -16,8 +16,13 @@ function include_template($name, $data){
     return $result;
 }
 
-function get_project_count($tasks, $project)
-{
+/**
+ * Get the count of tasks for current project
+ * @param $tasks - All tasks
+ * @param $project - Current project
+ * @return int The count of tasks relevant to current project
+ */
+function get_project_count($tasks, $project){
     $tasksCount = 0;
     foreach ($tasks as $key => $task) {
         if ((string)$task['category'] === (string)$project) {
@@ -26,4 +31,20 @@ function get_project_count($tasks, $project)
     }
 
     return $tasksCount;
+}
+
+/**
+ * Checks if the task deadline is nearing the end
+ * @param $stringTaskDate - Deadline of the task
+ * @return bool Task overdue or near deadline
+ */
+function check_task_date($stringTaskDate){
+    $taskDate = strtotime($stringTaskDate);
+    $currentDate = time();
+    $diff = $taskDate - $currentDate;
+
+    $secondsInHour = 3600;
+    $hoursInDay = 24;
+
+    return $diff / $secondsInHour < $hoursInDay;
 }
