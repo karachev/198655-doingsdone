@@ -27,8 +27,6 @@ CREATE TABLE task (
   name CHAR(128),
   file CHAR(128),
   deadline TIMESTAMP,
-  author_id INT,
   project_id INT,
-  FOREIGN KEY (author_id) REFERENCES user(id),
   FOREIGN KEY (project_id) REFERENCES project(id)
 );
