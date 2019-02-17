@@ -2,21 +2,22 @@
 require_once('init.php');
 
 // код SQL-запроса
-$sql = 'SELECT name FROM project';
-//
-$result = mysqli_query($link, $sql);
-if ($result) {
-    $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$sql = 'SELECT name, id FROM project WHERE author_id = 1';
+$resultProjects = mysqli_query($link, $sql);
+
+if ($resultProjects) {
+    $projects = mysqli_fetch_all($resultProjects, MYSQLI_ASSOC);
 } else {
     print('На сайте ведутся технические работы');
 }
 
-$sql = 'SELECT * FROM task WHERE id = 1';
+$sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id   FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = 1;';
+$resultTasks = mysqli_query($link, $sql);
 
-if ($res = mysqli_query($link, $sql)) {
-    $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
+if ($resultTasks) {
+    $tasks = mysqli_fetch_all($resultTasks, MYSQLI_ASSOC);
 } else {
-    print('На сайте ведутся технические работы22');
+    print('На сайте ведутся технические работы');
 }
 
 $page_content = include_template('index.php', [

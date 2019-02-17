@@ -25,7 +25,7 @@ function include_template($name, $data){
 function get_project_count($tasks, $project){
     $tasksCount = 0;
     foreach ($tasks as $key => $task) {
-        if ((string)$task['category'] === (string)$project) {
+        if ((string)$task['project_id'] === (string)$project['id']) {
             $tasksCount++;
         }
     }
