@@ -1,25 +1,10 @@
 <?php
 require_once('init.php');
 
-// код SQL-запроса
-$sql = 'SELECT name, id FROM project WHERE author_id = 1';
-$resultProjects = mysqli_query($link, $sql);
+$user_id = 1;
 
-if ($resultProjects) {
-    // $projects = mysqli_fetch_all($resultProjects, MYSQLI_ASSOC);
-    db_get_prepare_stmt($link, $sql);
-} else {
-    exit('На сайте ведутся технические работы');
-}
-
-$sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id   FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = 1;';
-$resultTasks = mysqli_query($link, $sql);
-
-if ($resultTasks) {
-    $tasks = mysqli_fetch_all($resultTasks, MYSQLI_ASSOC);
-} else {
-    exit('На сайте ведутся технические работы');
-}
+$projects = get_projects($link, $user_id);
+$tasks = get_tasks($link, $user_id);
 
 $page_content = include_template('index.php', [
     'tasks' => $tasks,
