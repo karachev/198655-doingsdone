@@ -6,7 +6,8 @@ $sql = 'SELECT name, id FROM project WHERE author_id = 1';
 $resultProjects = mysqli_query($link, $sql);
 
 if ($resultProjects) {
-    $projects = mysqli_fetch_all($resultProjects, MYSQLI_ASSOC);
+    // $projects = mysqli_fetch_all($resultProjects, MYSQLI_ASSOC);
+    db_get_prepare_stmt($link, $sql);
 } else {
     exit('На сайте ведутся технические работы');
 }
