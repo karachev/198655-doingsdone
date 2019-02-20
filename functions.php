@@ -78,3 +78,13 @@ function get_tasks($link, $authorId) {
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+function has_project_id($project_id, $projects) {
+    foreach ($projects as $key => $project) {
+        if ((int) $project['id'] === (int) $project_id) {
+            return true;
+        }
+    }
+
+    return false;
+}
