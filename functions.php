@@ -64,6 +64,15 @@ function get_projects($link, $authorId){
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+function get_tasks_for_current_project($link, $authorId, $project_id) {
+    $sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = ? AND project_id = ?;';
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId, $project_id]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 /**
  * Get all tasks of current user
  * @param $link - Connect to mysql
