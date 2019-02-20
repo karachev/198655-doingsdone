@@ -64,9 +64,16 @@ function get_projects($link, $authorId){
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-function get_tasks_for_current_project($link, $authorId, $project_id) {
+/**
+ * Get all tasks for current project and user
+ * @param $link - Connect to mysql
+ * @param $authorId - Current user id
+ * @param $projectId - Current project id
+ * @return object All project of current user and project
+ */
+function get_tasks_for_current_project($link, $authorId, $projectId) {
     $sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = ? AND project_id = ?;';
-    $stmt = db_get_prepare_stmt($link, $sql, [$authorId, $project_id]);
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId, $projectId]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
@@ -88,9 +95,15 @@ function get_tasks($link, $authorId) {
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-function has_project_id($project_id, $projects) {
+/**
+ * Checks if the project id is in the project list.
+ * @param $projectId - Current project id
+ * @param $projects - List of projects
+ * @return bool Is on the list or not
+ */
+function has_project_id($projectId, $projects) {
     foreach ($projects as $key => $project) {
-        if ((int) $project['id'] === (int) $project_id) {
+        if ((int) $project['id'] === (int) $projectId) {
             return true;
         }
     }
