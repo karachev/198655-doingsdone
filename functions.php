@@ -25,7 +25,7 @@ function include_template($name, $data){
 function get_project_count($tasks, $project){
     $tasksCount = 0;
     foreach ($tasks as $key => $task) {
-        if ((string)$task['category'] === (string)$project) {
+        if ((int)$task['project_id'] === (int)$project['id']) {
             $tasksCount++;
         }
     }
@@ -47,4 +47,34 @@ function check_task_date($stringTaskDate){
     $hoursInDay = 24;
 
     return $diff / $secondsInHour < $hoursInDay;
+}
+
+/**
+ * Get all projects of current user
+ * @param $link - Connect to mysql
+ * @param $authorId - Current user id
+ * @return object All project of current user
+ */
+function get_projects($link, $authorId){
+    $sql = 'SELECT name, id FROM project WHERE author_id = ?';
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+ * Get all tasks of current user
+ * @param $link - Connect to mysql
+ * @param $authorId - Current user id
+ * @return object All tasks of current user
+ */
+function get_tasks($link, $authorId) {
+    $sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = ?;';
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }

@@ -27,3 +27,11 @@ UPDATE task SET status = 1 WHERE id = 5;
 
 -- Обновить название задачи по её идентификатору
 UPDATE task SET name = 'Заказать пиццу и напитки' WHERE id = 6;
+
+-- Добавляет для проверки еще несколько проектов
+INSERT INTO project (name, author_id) VALUES ('Учеба', 1), ('Работа', 1);
+
+-- Добавляет для проверки несколько задач
+INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
+VALUES  (null, null, 0, 'Проверить список задач', 'Home.psd', '01.12.2019', 6),
+        (null, null, 0, 'проверить список проектов', 'Home.psd', '25.12.2019', 7);
