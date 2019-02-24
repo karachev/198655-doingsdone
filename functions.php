@@ -65,6 +65,23 @@ function get_projects($link, $authorId){
 }
 
 /**
+ * Get project ID of current user and current project
+ * @param $link - Connect to mysql
+ * @param $authorId - Current user id
+ * @param $projectName - Current project name
+ * @return object All project of current user and project name
+ */
+function get_project_id($link, $authorId, $projectName){
+    $sql = 'SELECT id FROM project WHERE author_id = ? AND name = ?';
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId, $projectName]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $resultFetch = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    return $resultFetch['0']['id'];
+}
+
+/**
  * Get all tasks for current project and user
  * @param $link - Connect to mysql
  * @param $authorId - Current user id

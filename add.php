@@ -8,11 +8,11 @@ $tasks = get_tasks($link, $user_id);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task = $_POST;
-    $task['date'] = NULL;
 
     $required = ['name', 'project'];
     $dict = ['name' => 'Название задачи', 'project' => 'Проект', 'date' => 'Дата выполнения'];
     $errors = [];
+    $deadline = NULL;
 
     // Проверка обязательных полей
     foreach ($required as $key) {
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Проверка поля даты
     if (empty($task['date'])) {
-        $deadline = 'null';
+        $errors['date'] = 'Дата не выбрана';
     }
     elseif (empty($errors['date']) && strtotime($task['date']) < time()) {
         $errors['date'] = 'Выбранная дата меньше текущей';
@@ -36,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     else {
         $deadline = '"' . $task['date'] . '"';
     }
+
+    $task_name = $task['name'];
+    $project_name = $task['project'];
 
     // Загрузка файла
     if (is_uploaded_file($_FILES['preview']['tmp_name'])) {
@@ -48,9 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $file = '';
     }
 
+    // Добавление в базу и редирект
     if (empty($errors)) {
+        $projectID = get_project_id($link, $user_id, $project_name);
         $sql = 'INSERT INTO task (date_create, date_done, status, name, deadline, project_id)
-        VALUES (NOW(), NULL, 0, "' . $task['name'] .'", NULL, 1)';
+        VALUES (NOW(), NULL, 0, "'. $task_name .'", '.$deadline.', '. $projectID .')';
         $result_task = mysqli_query($link, $sql);
         if ($result_task) {
             header("Location: index.php");
