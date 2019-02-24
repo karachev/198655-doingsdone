@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $required = ['name', 'project'];
     $dict = ['name' => 'Название задачи', 'project' => 'Проект', 'date' => 'Дата выполнения'];
     $errors = [];
-    $deadline = NULL;
 
     // Проверка обязательных полей
     foreach ($required as $key) {
@@ -21,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Проверка поля имя
+    // Проверка поля с именем
     if (empty($errors['name']) && strlen($task['name']) > 128) {
         $errors['name'] = 'Макисмальная длина имени задачи 128 символов';
     }
@@ -40,12 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task_name = $task['name'];
     $project_name = $task['project'];
 
-    // Загрузка файла
-    if (is_uploaded_file($_FILES['preview']['tmp_name'])) {
-        $tmp_name = $_FILES['preview']['tmp_name'];
-        $path = uniqid();
-        move_uploaded_file($tmp_name, 'uploads/' . $path);
+    // Добавление файла
+    if ($task['preview']) {
+        $ext = pathinfo($task['preview'], PATHINFO_EXTENSION);
+        $path = uniqid() . '.' . $ext;
         $file = $path;
+        move_uploaded_file($_FILES['preview']['tmp_name'], 'uploads/' . $file);
     }
     else {
         $file = '';
@@ -54,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Добавление в базу и редирект
     if (empty($errors)) {
         $projectID = get_project_id($link, $user_id, $project_name);
-        $sql = 'INSERT INTO task (date_create, date_done, status, name, deadline, project_id)
-        VALUES (NOW(), NULL, 0, "'. $task_name .'", '.$deadline.', '. $projectID .')';
+        $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
+        VALUES (NOW(), NULL, 0, "'. $task_name .'", "'. $file .'", '.$deadline.', '. $projectID .')';
         $result_task = mysqli_query($link, $sql);
         if ($result_task) {
             header("Location: index.php");
