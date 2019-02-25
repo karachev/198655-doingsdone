@@ -1,6 +1,6 @@
 <h2 class="content__main-heading">Добавление задачи</h2>
 
-<form class="form" action="" method="post">
+<form class="form" action="" method="post" enctype="multipart/form-data">
     <div class="form__row">
         <label class="form__label" for="name">Название <sup>*</sup></label>
 
@@ -23,7 +23,6 @@
         <label class="form__label" for="date">Дата выполнения</label>
 
         <input class="form__input form__input--date <?= !empty($errors['date']) ? "form__input--error" : ""?>" type="date" name="date" id="date" value="<?= !empty($task['date']) ? $task['date'] : ""?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
-
         <p class="form__message"><?= !empty($errors['date']) ? $errors['date'] : "";?></p>
     </div>
 

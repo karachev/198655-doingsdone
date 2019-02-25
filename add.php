@@ -40,14 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $project_name = $task['project'];
 
     // Добавление файла
-    if ($task['preview']) {
-        $ext = pathinfo($task['preview'], PATHINFO_EXTENSION);
-        $path = uniqid() . '.' . $ext;
+    if (isset($_FILES)) {
+        $tmp_name = $_FILES['preview']['tmp_name'];
+        $path = $_FILES['preview']['name'];
+        move_uploaded_file($tmp_name, 'uploads/' .$path);
         $file = $path;
-        move_uploaded_file($_FILES['preview']['tmp_name'], 'uploads/' . $file);
-    }
-    else {
-        $file = '';
     }
 
     // Добавление в базу и редирект
@@ -64,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 $page_content = include_template('form-task.php', [
     'projects' => $projects,
-    'tasks' => $tasks,
+    'task' => $task,
     'errors' => $errors,
 ]);
 
