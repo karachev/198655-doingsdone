@@ -38,16 +38,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['password'] = 'Пароль не может быть длиннее 64 символов';
     }
 
-    // Проверка email
+    /**
+     * Проверка поля с email в базе данных
+     */
     if (!empty($data['email'])) {
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'E-mail введён некорректно';
         }
-//        $sql = 'SELECT user_id FROM users WHERE email = "' . $data['email'] . '"';
-//        $res = mysqli_query($link, $sql);
-//        if (mysqli_num_rows($res) > 0) {
-//            $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
-//        }
+        $res = get_user_id($link, $data['email']);
+        if (count($res) > 0) {
+            $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
+        }
+    }
+
+    /**
+     * Шифрование пароля
+     */
+    if (!empty($data['password'])) {
+        $password = password_hash($data['password'], PASSWORD_DEFAULT);
+    }
+
+    /**
+     * Добавление пользователя в базу данных
+     */
+    if (empty($errors)) {
+        $sql = 'INSERT INTO user (date_registration, email, name, password) VALUES (NOW(), "' . $data['email'] . '", "' . $data['name'] . '", "' . $password . '")';
+        $result = mysqli_query($link, $sql);
+        if ($result) {
+            header("Location: index.php");
+        }
     }
 }
 

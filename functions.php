@@ -127,3 +127,14 @@ function has_project_id($projectId, $projects) {
 
     return false;
 }
+
+/**
+ */
+function get_user_id($link, $email){
+    $sql = 'SELECT id FROM user WHERE email = ?;';
+    $stmt = db_get_prepare_stmt($link, $sql, [$email]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
