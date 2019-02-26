@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = [];
 
     /**
-     * Проверка обязательных полей
+     * Check required fields
      */
     foreach ($required as $key) {
         if (empty($_POST[$key])) {
@@ -18,28 +18,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     /**
-     * Проверка поля с именем
+     * Check name field
      */
     if (strlen($data['name']) > 128) {
         $errors['name'] = 'Макисмальная длина имени 128 символов';
     }
 
     /**
-     * Проверка поля с email
+     * Check email field
      */
     if (strlen($data['email']) > 128) {
         $errors['email'] = 'Макисмальная длина имени 128 символов';
     }
 
     /**
-     * Проверка поля с паролем
+     * Check password field
      */
     if (strlen($data['password']) > 64) {
         $errors['password'] = 'Пароль не может быть длиннее 64 символов';
     }
 
     /**
-     * Проверка поля с email в базе данных
+     * Check email field in database
      */
     if (!empty($data['email'])) {
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -52,14 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     /**
-     * Шифрование пароля
+     * Password encryption
      */
     if (!empty($data['password'])) {
         $password = password_hash($data['password'], PASSWORD_DEFAULT);
     }
 
     /**
-     * Добавление пользователя в базу данных
+     * Add user to database
      */
     if (empty($errors)) {
         $sql = 'INSERT INTO user (date_registration, email, name, password) VALUES (NOW(), "' . $data['email'] . '", "' . $data['name'] . '", "' . $password . '")';

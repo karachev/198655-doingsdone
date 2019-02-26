@@ -129,6 +129,10 @@ function has_project_id($projectId, $projects) {
 }
 
 /**
+ * Get the user's ID by his email
+ * @param $link - Connect to mysql
+ * @param $authorId - Current email
+ * @return object Returns the user ID
  */
 function get_user_id($link, $email){
     $sql = 'SELECT id FROM user WHERE email = ?;';

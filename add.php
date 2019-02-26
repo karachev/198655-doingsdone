@@ -13,19 +13,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $dict = ['name' => 'Название задачи', 'project' => 'Проект', 'date' => 'Дата выполнения'];
     $errors = [];
 
-    // Проверка обязательных полей
+    /**
+     * Check required fields
+     */
     foreach ($required as $key) {
         if (empty($_POST[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
         }
     }
 
-    // Проверка поля с именем
+    /**
+     * Check name field
+     */
     if (strlen($task['name']) > 128) {
         $errors['name'] = 'Макисмальная длина имени задачи 128 символов';
     }
 
-    // Проверка поля даты
+    /**
+     * Check date field
+     */
     if (empty($task['date'])) {
         $errors['date'] = 'Дата не выбрана';
     }
@@ -39,7 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task_name = $task['name'];
     $project_name = $task['project'];
 
-    // Добавление файла
+    /**
+     * Add file
+     */
     if (isset($_FILES)) {
         $tmp_name = $_FILES['preview']['tmp_name'];
         $path = $_FILES['preview']['name'];
@@ -47,7 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $file = $path;
     }
 
-    // Добавление в базу и редирект
+    /**
+     * Add user to database
+     */
     if (empty($errors)) {
         $projectID = get_project_id($link, $user_id, $project_name);
         $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
