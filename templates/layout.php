@@ -20,44 +20,69 @@
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить
-                    задачу</a>
+                <?php $user = false; ?>
 
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__image">
-                        <img src="img/user.png" width="40" height="40" alt="Пользователь">
+                <?php if (!empty($user)) : ?>
+                    <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить
+                        задачу</a>
+                    <div class="main-header__side-item user-menu">
+                        <div class="user-menu__image">
+                            <img src="img/user.png" width="40" height="40" alt="Пользователь">
+                        </div>
+
+                        <div class="user-menu__data">
+                            <p><?=$userName;?></p>
+
+                            <a href="#">Выйти</a>
+                        </div>
                     </div>
-
-                    <div class="user-menu__data">
-                        <p><?=$userName;?></p>
-
-                        <a href="#">Выйти</a>
+                <?php else : ?>
+                    <div class="main-header__side">
+                        <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
                     </div>
-                </div>
+                <?php endif; ?>
+
             </div>
         </header>
 
+
         <div class="content">
-            <section class="content__side">
-                <h2 class="content__side-heading">Проекты</h2>
 
-                <nav class="main-navigation">
-                    <ul class="main-navigation__list">
-                        <?php foreach ($projects as $project): ?>
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="index.php?project_id=<?= $project['id']; ?>"><?= htmlspecialchars($project['name']); ?></a>
-                                <span class="main-navigation__list-item-count"><?= get_project_count($tasks, $project); ?></span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </nav>
+            <?php if (!empty($user)) : ?>
+                <section class="content__side">
+                    <h2 class="content__side-heading">Проекты</h2>
 
-                <a class="button button--transparent button--plus content__side-button"
-                   href="pages/form-project.html" target="project_add">Добавить проект</a>
-            </section>
-            <main class="content__main">
-                <?= $content; ?>
-            </main>
+                    <nav class="main-navigation">
+                        <ul class="main-navigation__list">
+                            <?php foreach ($projects as $project): ?>
+                                <li class="main-navigation__list-item">
+                                    <a class="main-navigation__list-item-link" href="index.php?project_id=<?= $project['id']; ?>"><?= htmlspecialchars($project['name']); ?></a>
+                                    <span class="main-navigation__list-item-count"><?= get_project_count($tasks, $project); ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </nav>
+
+                    <a class="button button--transparent button--plus content__side-button"
+                       href="pages/form-project.html" target="project_add">Добавить проект</a>
+                </section>
+                <main class="content__main">
+                    <?= $content; ?>
+                </main>
+            <?php else : ?>
+                <section class="welcome">
+                    <h2 class="welcome__heading">«Дела в порядке»</h2>
+
+                    <div class="welcome__text">
+                        <p>«Дела в порядке» — это веб приложение для удобного ведения списка дел. Сервис помогает пользователям не забывать о предстоящих важных событиях и задачах.</p>
+
+                        <p>После создания аккаунта, пользователь может начать вносить свои дела, деля их по проектам и указывая сроки.</p>
+                    </div>
+
+                    <a class="welcome__button button" href="join.php">Зарегистрироваться</a>
+                </section>
+            <?php endif; ?>
+
         </div>
     </div>
 </div>
