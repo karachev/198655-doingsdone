@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Проверка поля с именем
-    if (empty($errors['name']) && strlen($task['name']) > 128) {
+    if (strlen($task['name']) > 128) {
         $errors['name'] = 'Макисмальная длина имени задачи 128 символов';
     }
 
