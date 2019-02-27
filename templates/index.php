@@ -34,7 +34,7 @@
                 </td>
 
                 <td class="task__file">
-                    <a class="download-link" href="#">Home.psd</a>
+                    <a class="download-link" href="<?= 'uploads/' . $task['file']; ?>"><?= htmlspecialchars($task['file']); ?></a>
                 </td>
 
                 <td class="task__date"><?= $task['date'] ? $task['date'] : 'Нет'; ?></td>
