@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'E-mail введён некорректно';
         }
-        $res = get_user_id($link, $data['email']);
+        $res = getUserByMail($link, $data['email']);
         if (count($res) > 0) {
             $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
         }
