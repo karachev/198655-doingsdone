@@ -1,6 +1,9 @@
 <?php
 require_once('init.php');
 
+$data = [];
+$errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST;
 
