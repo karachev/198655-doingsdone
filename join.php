@@ -75,7 +75,7 @@ $page_content = include_template('register.php', [
     'errors' => $errors,
 ]);
 
-$layout_content = include_template('layout-register.php', [
+$layout_content = include_template('layout.php', [
     'content' => $page_content,
     'title' => 'Дела в порядке',
 ]);

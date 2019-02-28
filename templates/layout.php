@@ -20,8 +20,6 @@
             </a>
 
             <div class="main-header__side">
-                <?php $user = false; ?>
-
                 <?php if (!empty($user)) : ?>
                     <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить
                         задачу</a>
@@ -47,7 +45,6 @@
 
 
         <div class="content">
-
             <?php if (!empty($user)) : ?>
                 <section class="content__side">
                     <h2 class="content__side-heading">Проекты</h2>
@@ -66,22 +63,17 @@
                     <a class="button button--transparent button--plus content__side-button"
                        href="pages/form-project.html" target="project_add">Добавить проект</a>
                 </section>
-                <main class="content__main">
-                    <?= $content; ?>
-                </main>
             <?php else : ?>
-                <section class="welcome">
-                    <h2 class="welcome__heading">«Дела в порядке»</h2>
+                <section class="content__side">
+                    <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
-                    <div class="welcome__text">
-                        <p>«Дела в порядке» — это веб приложение для удобного ведения списка дел. Сервис помогает пользователям не забывать о предстоящих важных событиях и задачах.</p>
-
-                        <p>После создания аккаунта, пользователь может начать вносить свои дела, деля их по проектам и указывая сроки.</p>
-                    </div>
-
-                    <a class="welcome__button button" href="join.php">Зарегистрироваться</a>
+                    <a class="button button--transparent content__side-button" href="form-authorization.html">Войти</a>
                 </section>
             <?php endif; ?>
+
+            <main class="content__main">
+                <?= $content; ?>
+            </main>
 
         </div>
     </div>
