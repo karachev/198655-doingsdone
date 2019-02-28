@@ -6,12 +6,14 @@ $user_id = 1;
 $projects = get_projects($link, $user_id);
 $tasks = get_tasks($link, $user_id);
 
+$task = [];
+$errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task = $_POST;
 
     $required = ['name', 'project'];
     $dict = ['name' => 'Название задачи', 'project' => 'Проект', 'date' => 'Дата выполнения'];
-    $errors = [];
 
     /**
      * Check required fields
