@@ -1,8 +1,6 @@
 <?php
 require_once('init.php');
 
-$user = false;
-
 if (!$user){
     $page_content = include_template('guest.php', []);
 
