@@ -9,13 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $required = ['email', 'password', 'name'];
     $dict = ['email' => 'E-mail', 'password' => 'Пароль', 'name' => 'Имя'];
-    $errors = [];
 
     /**
      * Check required fields
      */
     foreach ($required as $key) {
-        if (empty($_POST[$key])) {
+        if (empty($data[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
         }
     }

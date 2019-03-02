@@ -41,7 +41,6 @@ $layout_content = include_template('layout.php', [
     'projects' => $projects,
     'user' => $user,
     'title' => 'Дела в порядке',
-    'userName' => $user['name']
 ]);
 //
 print($layout_content);

@@ -6,28 +6,33 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST;
-
     $required = ['email', 'password'];
 
+    /**
+     * Check required fields
+     */
     foreach ($required as $key) {
-
         if (empty($data[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
         }
     }
 
+    /**
+     * Check email field
+     */
     if (empty($errors['email']) and (!filter_var($data['email'], FILTER_VALIDATE_EMAIL) or strlen($data['email']) > 128)) {
         $errors['email'] = 'E-mail введён некорректно';
     }
 
-
+    /**
+     * Check user in database
+     */
     if (empty($errors)) {
-        $email = $data['email'];
 
-        $sql = 'SELECT * FROM user WHERE email = "' . $email . '"';
-        $res = mysqli_query($link, $sql);
-        $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
-        if ($user === null) {
+
+        $user = getUserByMail($link, $data['email'])[0];
+
+        if (empty($user)) {
             $errors['email'] = 'Такой пользователь не найден';
         }
         elseif (password_verify($data['password'], $user['password'])) {

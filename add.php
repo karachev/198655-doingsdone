@@ -2,17 +2,19 @@
 require_once('init.php');
 
 $user = $_SESSION['user'];
-$user_id = $user['id'];
 
+if (!$user){
+    header("Location: /");
+}
+
+$user_id = $user['id'];
 $projects = get_projects($link, $user_id);
 $tasks = get_tasks($link, $user_id);
-
 $task = [];
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task = $_POST;
-
     $required = ['name', 'project'];
     $dict = ['name' => 'Название задачи', 'project' => 'Проект', 'date' => 'Дата выполнения'];
 
@@ -83,7 +85,7 @@ $layout_content = include_template('layout.php', [
     'tasks' => $tasks,
     'projects' => $projects,
     'title' => 'Дела в порядке',
-    'userName' => 'Константин'
+    'user' => $user,
 ]);
 
 print($layout_content);
