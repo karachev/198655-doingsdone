@@ -15,9 +15,6 @@ if (!$user){
     exit();
 }
 
-$user = $_SESSION['user'];
-$user_id = $user['id'];
-
 $projects = get_projects($link, $user_id);
 $tasks = get_tasks($link, $user_id);
 $project_id = NULL;

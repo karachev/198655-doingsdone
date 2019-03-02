@@ -1,8 +1,6 @@
 <?php
 require_once('init.php');
 
-$user = $_SESSION['user'];
-
 if (!$user){
     header("Location: /");
 }
