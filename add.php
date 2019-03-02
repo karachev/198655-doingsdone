@@ -1,7 +1,8 @@
 <?php
 require_once('init.php');
 
-$user_id = 1;
+$user = $_SESSION['user'];
+$user_id = $user['id'];
 
 $projects = get_projects($link, $user_id);
 $tasks = get_tasks($link, $user_id);

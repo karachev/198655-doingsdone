@@ -15,7 +15,9 @@ if (!$user){
     exit();
 }
 
-$user_id = 1;
+$user = $_SESSION['user'];
+$user_id = $user['id'];
+
 $projects = get_projects($link, $user_id);
 $tasks = get_tasks($link, $user_id);
 $project_id = NULL;
@@ -39,7 +41,7 @@ $layout_content = include_template('layout.php', [
     'projects' => $projects,
     'user' => $user,
     'title' => 'Дела в порядке',
-    'userName' => 'Константин'
+    'userName' => $user['name']
 ]);
 //
 print($layout_content);
