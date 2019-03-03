@@ -52,11 +52,24 @@ $tasks_filter = 'all';
 if (isset($_GET['task_switch'])) {
     $tasks_filter = $_GET['task_switch'];
 
+    switch ($tasks_filter) {
+        case 'all':
+            $tasks = get_tasks($link, $user_id);
+            break;
+        case 'today' :
+            $filterDate = date("y.m.d", strtotime('today'));
+            $tasks = getFilterTaskWithDate($link, $user_id, $filterDate);
+            break;
+        case 'tomorrow':
+            $filterDate = date("y.m.d", strtotime('+1 day'));
+            $tasks = getFilterTaskWithDate($link, $user_id, $filterDate);
+            break;
+        case 'overdue':
+            $filterDate = date("y.m.d", strtotime('today'));
+            $tasks = getOverdueTasks($link, $user_id, $filterDate);
+            break;
+    }
 }
-
-
-
-
 $show_completed = (int) $_GET['show_completed'];
 
 $page_content = include_template('index.php', [

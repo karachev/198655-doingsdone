@@ -157,3 +157,31 @@ function getDoneTasks($link, $authorId) {
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+/**
+
+ */
+function getFilterTaskWithDate($link, $authorId, $filterDate) {
+    $sql = 'SELECT task.* FROM task LEFT JOIN project ON task.project_id = project.id WHERE author_id = ? AND " '. $filterDate .' " = deadline;';
+
+    var_dump($sql);
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+
+ */
+function getOverdueTasks($link, $authorId, $filterDate) {
+    $sql = 'SELECT task.* FROM task LEFT JOIN project ON task.project_id = project.id WHERE author_id = ? AND " '. $filterDate .' " > deadline;';
+
+    var_dump($sql);
+    $stmt = db_get_prepare_stmt($link, $sql, [$authorId]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
