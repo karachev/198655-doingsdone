@@ -37,7 +37,7 @@
                     <a class="download-link" href="<?= 'uploads/' . $task['file']; ?>"><?= htmlspecialchars($task['file']); ?></a>
                 </td>
 
-                <td class="task__date"><?= $task['deadline'] ? $task['deadline'] : 'Нет'; ?></td>
+                <td class="task__date"><?= $task['deadline'] ? date("d.m.Y", strtotime($task['deadline'])) : 'Нет'; ?></td>
             </tr>
         <? endif; ?>
     <?php endforeach; ?>

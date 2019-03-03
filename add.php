@@ -40,9 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     elseif (empty($errors['date']) && strtotime($task['date']) < time()) {
         $errors['date'] = 'Выбранная дата меньше текущей';
-    }
-    else {
-        $deadline = '"' . $task['date'] . '"';
+    } else {
+        $deadline = date_format(date_create($task['date']), 'Y-m-d');
+
     }
 
     $task_name = $task['name'];
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($errors)) {
         $projectID = get_project_id($link, $user_id, $project_name);
         $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
-        VALUES (NOW(), NULL, 0, "'. $task_name .'", "'. $file .'", '.$deadline.', '. $projectID .')';
+        VALUES (NOW(), NULL, 0, "'. $task_name .'", "'. $file .'", "'. $deadline .'", '. $projectID .')';
         $result_task = mysqli_query($link, $sql);
         if ($result_task) {
             header("Location: index.php");
