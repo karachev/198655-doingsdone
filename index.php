@@ -40,9 +40,22 @@ if (isset($_GET['task_id'])) {
     }
 }
 
+$show_completed = NULL;
+
+if (isset($_GET['show_completed'])) {
+    $show_completed = (int) $_GET['show_completed'];
+    $tasks = getTaskWithCurrentStatus($link, $show_completed, $user_id);
+    if ($tasks) {
+        header("Location: index.php");
+        exit();
+    }
+}
+
+
+
 $page_content = include_template('index.php', [
     'tasks' => (!empty($project_id)) ? get_tasks_for_current_project($link, $user_id, $project_id) : $tasks,
-    'showCompleteTasks' => $showCompleteTasks
+    'showCompleteTasks' => $show_completed
 ]);
 
 $layout_content = include_template('layout.php', [

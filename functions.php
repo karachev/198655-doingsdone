@@ -134,9 +134,24 @@ function has_project_id($projectId, $projects) {
  * @param $authorId - Current email
  * @return object Returns user data
  */
-function getUserByMail($link, $email){
+function getUserByMail($link, $email) {
     $sql = 'SELECT * FROM user WHERE email = ?;';
     $stmt = db_get_prepare_stmt($link, $sql, [$email]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+ * Get the user's data by his email
+ * @param $link - Connect to mysql
+ * @param $authorId - Current email
+ * @return object Returns user data
+ */
+function getTaskWithCurrentStatus($link, $status, $authorId) {
+    $sql = 'SELECT * FROM task LEFT JOIN project ON task.project_id = project.id WHERE status = ? AND author_id = ?;';
+    $stmt = db_get_prepare_stmt($link, $sql, [$status, $authorId]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 

@@ -1,2 +1,2 @@
 <?php
-$showCompleteTasks = rand(0, 1);
+//$showCompleteTasks = rand(0, 1);
