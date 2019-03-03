@@ -27,6 +27,19 @@ if (isset($_GET['project_id'])) {
     }
 }
 
+$task_id = NULL;
+
+if (isset($_GET['task_id'])) {
+    $task_id = (int) $_GET['task_id'];
+    $task_status = (int) $_GET['check'];
+    $sql = 'UPDATE task SET status = "'. $task_status .'" WHERE id = "' . $task_id . '" ';
+    $result = mysqli_query($link, $sql);
+    if ($result) {
+        header("Location: index.php");
+        exit();
+    }
+}
+
 $page_content = include_template('index.php', [
     'tasks' => (!empty($project_id)) ? get_tasks_for_current_project($link, $user_id, $project_id) : $tasks,
     'showCompleteTasks' => $showCompleteTasks
