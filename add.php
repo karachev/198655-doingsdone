@@ -42,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errors['date'] = 'Выбранная дата меньше текущей';
     } else {
         $deadline = date_format(date_create($task['date']), 'Y-m-d');
-
     }
 
     $task_name = $task['name'];
