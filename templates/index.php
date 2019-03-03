@@ -8,10 +8,10 @@
 
 <div class="tasks-controls">
     <nav class="tasks-switch">
-        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-        <a href="/" class="tasks-switch__item">Повестка дня</a>
-        <a href="/" class="tasks-switch__item">Завтра</a>
-        <a href="/" class="tasks-switch__item">Просроченные</a>
+        <a href="/?task_switch=all" class="tasks-switch__item <?= ($tasksFilter === 'all') ? 'tasks-switch__item--active' : ''; ?>">Все задачи</a>
+        <a href="/?task_switch=today" class="tasks-switch__item <?= ($tasksFilter === 'today') ? 'tasks-switch__item--active' : ''; ?>">Повестка дня</a>
+        <a href="/?task_switch=tomorrow" class="tasks-switch__item <?= ($tasksFilter === 'tomorrow') ? 'tasks-switch__item--active' : ''; ?>">Завтра</a>
+        <a href="/?task_switch=overdue" class="tasks-switch__item <?= ($tasksFilter === 'overdue') ? 'tasks-switch__item--active' : ''; ?>">Просроченные</a>
     </nav>
 
     <label class="checkbox">

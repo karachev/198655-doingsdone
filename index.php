@@ -48,11 +48,21 @@ if (isset($_GET['show_completed']) && (int) $_GET['show_completed'] !== 0) {
     $tasks = get_tasks($link, $user_id);
 }
 
+$tasks_filter = 'all';
+if (isset($_GET['task_switch'])) {
+    $tasks_filter = $_GET['task_switch'];
+
+}
+
+
+
+
 $show_completed = (int) $_GET['show_completed'];
 
 $page_content = include_template('index.php', [
     'tasks' => (!empty($project_id)) ? get_tasks_for_current_project($link, $user_id, $project_id) : $tasks,
-    'showCompleteTasks' => $show_completed
+    'showCompleteTasks' => $show_completed,
+    'tasksFilter' => $tasks_filter,
 ]);
 
 $layout_content = include_template('layout.php', [
