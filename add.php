@@ -5,9 +5,9 @@ if (!$user){
     header("Location: /");
 }
 
-$user_id = $user['id'];
-$projects = get_projects($link, $user_id);
-$tasks = get_tasks($link, $user_id);
+$userID = $user['id'];
+$projects = getProjects($link, $userID);
+$tasks = getTasks($link, $userID);
 $task = [];
 $errors = [];
 
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      * Add user to database
      */
     if (empty($errors)) {
-        $projectID = get_project_id($link, $user_id, $project_name);
+        $projectID = get_project_id($link, $userID, $project_name);
         $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
         VALUES (NOW(), NULL, 0, "'. $task_name .'", "'. $file .'", "'. $deadline .'", '. $projectID .')';
         $result_task = mysqli_query($link, $sql);

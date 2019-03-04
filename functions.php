@@ -55,7 +55,7 @@ function check_task_date($stringTaskDate){
  * @param $authorId - Current user id
  * @return object All project of current user
  */
-function get_projects($link, $authorId){
+function getProjects($link, $authorId){
     $sql = 'SELECT name, id FROM project WHERE author_id = ?';
     $stmt = db_get_prepare_stmt($link, $sql, [$authorId]);
     mysqli_stmt_execute($stmt);
@@ -88,7 +88,7 @@ function get_project_id($link, $authorId, $projectName){
  * @param $projectId - Current project id
  * @return object All project of current user and project
  */
-function get_tasks_for_current_project($link, $authorId, $projectId) {
+function getTasksForCurrentProject($link, $authorId, $projectId) {
     $sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = ? AND project_id = ?;';
     $stmt = db_get_prepare_stmt($link, $sql, [$authorId, $projectId]);
     mysqli_stmt_execute($stmt);
@@ -103,7 +103,7 @@ function get_tasks_for_current_project($link, $authorId, $projectId) {
  * @param $authorId - Current user id
  * @return object All tasks of current user
  */
-function get_tasks($link, $authorId) {
+function getTasks($link, $authorId) {
     $sql = 'SELECT task.id, date_create, date_done, status, task.name, file, deadline, project_id, author_id FROM task INNER JOIN project ON project.id = task.project_id WHERE author_id = ?;';
     $stmt = db_get_prepare_stmt($link, $sql, [$authorId]);
     mysqli_stmt_execute($stmt);

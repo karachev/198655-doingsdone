@@ -15,8 +15,8 @@ if (!$user){
     exit();
 }
 
-$projects = get_projects($link, $user_id);
-$tasks = get_tasks($link, $user_id);
+$projects = getProjects($link, $userID);
+$tasks = getTasks($link, $userID);
 $project_id = NULL;
 
 if (isset($_GET['project_id'])) {
@@ -43,9 +43,9 @@ if (isset($_GET['task_id'])) {
 $show_completed = NULL;
 
 if (isset($_GET['show_completed']) && (int) $_GET['show_completed'] !== 0) {
-    $tasks = getDoneTasks($link, $user_id);
+    $tasks = getDoneTasks($link, $userID);
 } else {
-    $tasks = get_tasks($link, $user_id);
+    $tasks = getTasks($link, $userID);
 }
 
 $tasks_filter = 'all';
@@ -54,26 +54,26 @@ if (isset($_GET['task_switch'])) {
 
     switch ($tasks_filter) {
         case 'all':
-            $tasks = get_tasks($link, $user_id);
+            $tasks = getTasks($link, $userID);
             break;
         case 'today' :
             $filterDate = date("y.m.d", strtotime('today'));
-            $tasks = getFilterTaskWithDate($link, $user_id, $filterDate);
+            $tasks = getFilterTaskWithDate($link, $userID, $filterDate);
             break;
         case 'tomorrow':
             $filterDate = date("y.m.d", strtotime('+1 day'));
-            $tasks = getFilterTaskWithDate($link, $user_id, $filterDate);
+            $tasks = getFilterTaskWithDate($link, $userID, $filterDate);
             break;
         case 'overdue':
             $filterDate = date("y.m.d", strtotime('today'));
-            $tasks = getOverdueTasks($link, $user_id, $filterDate);
+            $tasks = getOverdueTasks($link, $userID, $filterDate);
             break;
     }
 }
 $show_completed = (int) $_GET['show_completed'];
 
 $page_content = include_template('index.php', [
-    'tasks' => (!empty($project_id)) ? get_tasks_for_current_project($link, $user_id, $project_id) : $tasks,
+    'tasks' => (!empty($project_id)) ? getTasksForCurrentProject($link, $userID, $project_id) : $tasks,
     'showCompleteTasks' => $show_completed,
     'tasksFilter' => $tasks_filter,
 ]);

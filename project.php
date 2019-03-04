@@ -5,8 +5,8 @@ if (!$user){
     header("Location: /");
 }
 
-$projects = get_projects($link, $user_id);
-$tasks = get_tasks($link, $user_id);
+$projects = getProjects($link, $userID);
+$tasks = getTasks($link, $userID);
 $errors = [];
 $project = [];
 
