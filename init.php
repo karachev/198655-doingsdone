@@ -4,7 +4,7 @@ require_once 'functions.php';
 
 session_start();
 $user = !empty($_SESSION['user']) ?  $_SESSION['user'] : [];
-$user_id = !empty($user['id']) ? $user['id'] : '';
+$userID = !empty($user['id']) ? $user['id'] : '';
 
 $db = [
     'host' => '127.0.0.1',

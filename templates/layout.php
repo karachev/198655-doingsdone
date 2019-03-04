@@ -54,14 +54,14 @@
                             <?php foreach ($projects as $project): ?>
                                 <li class="main-navigation__list-item">
                                     <a class="main-navigation__list-item-link" href="index.php?project_id=<?= $project['id']; ?>"><?= htmlspecialchars($project['name']); ?></a>
-                                    <span class="main-navigation__list-item-count"><?= get_project_count($tasks, $project); ?></span>
+                                    <span class="main-navigation__list-item-count"><?= getProjectCount($tasks, $project); ?></span>
                                 </li>
                             <?php endforeach; ?>
                         </ul>
                     </nav>
 
                     <a class="button button--transparent button--plus content__side-button"
-                       href="pages/form-project.html" target="project_add">Добавить проект</a>
+                       href="project.php" target="project_add">Добавить проект</a>
                 </section>
             <?php else : ?>
                 <section class="content__side">

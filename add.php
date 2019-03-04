@@ -5,9 +5,9 @@ if (!$user){
     header("Location: /");
 }
 
-$user_id = $user['id'];
-$projects = get_projects($link, $user_id);
-$tasks = get_tasks($link, $user_id);
+$userID = $user['id'];
+$projects = getProjects($link, $userID);
+$tasks = getTasks($link, $userID);
 $task = [];
 $errors = [];
 
@@ -40,21 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     elseif (empty($errors['date']) && strtotime($task['date']) < time()) {
         $errors['date'] = 'Выбранная дата меньше текущей';
-    }
-    else {
-        $deadline = '"' . $task['date'] . '"';
+    } else {
+        $deadline = date_format(date_create($task['date']), 'Y-m-d');
     }
 
-    $task_name = $task['name'];
-    $project_name = $task['project'];
+    $taskName = $task['name'];
+    $projectName = $task['project'];
 
     /**
      * Add file
      */
     if (isset($_FILES)) {
-        $tmp_name = $_FILES['preview']['tmp_name'];
+        $tmpName = $_FILES['preview']['tmp_name'];
         $path = $_FILES['preview']['name'];
-        move_uploaded_file($tmp_name, 'uploads/' .$path);
+        move_uploaded_file($tmpName, 'uploads/' .$path);
         $file = $path;
     }
 
@@ -62,28 +61,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      * Add user to database
      */
     if (empty($errors)) {
-        $projectID = get_project_id($link, $user_id, $project_name);
+        $projectID = get_project_id($link, $userID, $projectName);
         $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
-        VALUES (NOW(), NULL, 0, "'. $task_name .'", "'. $file .'", '.$deadline.', '. $projectID .')';
-        $result_task = mysqli_query($link, $sql);
-        if ($result_task) {
+        VALUES (NOW(), NULL, 0, "'. $taskName .'", "'. $file .'", "'. $deadline .'", '. $projectID .')';
+        $resultTask = mysqli_query($link, $sql);
+        if ($resultTask) {
             header("Location: index.php");
         }
     }
 }
 
-$page_content = include_template('form-task.php', [
+$pageContent = includeTemplate('form-task.php', [
     'projects' => $projects,
     'task' => $task,
     'errors' => $errors,
 ]);
 
-$layout_content = include_template('layout.php', [
-    'content' => $page_content,
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
     'tasks' => $tasks,
     'projects' => $projects,
     'title' => 'Дела в порядке',
     'user' => $user,
 ]);
 
-print($layout_content);
+print($layoutContent);
