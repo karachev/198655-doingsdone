@@ -1,7 +1,19 @@
 <?php
 require_once('init.php');
 
-$user_id = 1;
+if (!$user){
+    $page_content = include_template('guest.php', []);
+
+    $layout_content = include_template('layout.php', [
+        'content' => $page_content,
+        'title' => 'Дела в порядке',
+        'user' => false,
+        'userName' => ''
+    ]);
+
+    print($layout_content);
+    exit();
+}
 
 $projects = get_projects($link, $user_id);
 $tasks = get_tasks($link, $user_id);
@@ -24,8 +36,8 @@ $layout_content = include_template('layout.php', [
     'content' => $page_content,
     'tasks' => $tasks,
     'projects' => $projects,
+    'user' => $user,
     'title' => 'Дела в порядке',
-    'userName' => 'Константин'
 ]);
-
+//
 print($layout_content);
