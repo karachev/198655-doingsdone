@@ -36,24 +36,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      */
     if (empty($errors)) {
         $sql = 'INSERT INTO project (name, author_id) VALUES ("'. $project['name'] .'", "'. $user['id'] .'")';
-        $result_task = mysqli_query($link, $sql);
-        if ($result_task) {
+        $resultTask = mysqli_query($link, $sql);
+        if ($resultTask) {
             header("Location: index.php");
         }
     }
 }
 
-$page_content = include_template('form-project.php', [
+$pageContent = includeTemplate('form-project.php', [
     'projects' => $projects,
     'errors' => $errors,
 ]);
 
-$layout_content = include_template('layout.php', [
-    'content' => $page_content,
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
     'tasks' => $tasks,
     'projects' => $projects,
     'title' => 'Дела в порядке',
     'user' => $user,
 ]);
 
-print($layout_content);
+print($layoutContent);

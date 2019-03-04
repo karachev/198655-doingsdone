@@ -45,14 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
-$page_content = include_template('auth.php', [
+$pageContent = includeTemplate('auth.php', [
     'data' => $data,
     'errors' => $errors
 ]);
-$layout_content = include_template('layout.php', [
-    'content' => $page_content,
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
     'title' => 'Вход на сайт',
     'projects' => $projects,
 ]);
 
-print($layout_content);
+print($layoutContent);

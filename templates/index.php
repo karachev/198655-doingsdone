@@ -24,7 +24,7 @@
 <table class="tasks">
     <?php foreach ($tasks as $key => $task): ?>
         <? if (!$task['isDone'] || $showCompleteTasks): ?>
-            <tr class="tasks__item task <?= $task['isDone'] ? 'task--completed' : ''; ?> <?= $task['date'] && check_task_date($task['date']) ? 'task--important' : ''; ?> ">
+            <tr class="tasks__item task <?= $task['isDone'] ? 'task--completed' : ''; ?> <?= $task['date'] && checkTaskDate($task['date']) ? 'task--important' : ''; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox"

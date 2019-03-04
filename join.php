@@ -72,14 +72,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$page_content = include_template('register.php', [
+$pageContent = includeTemplate('register.php', [
     'data' => $data,
     'errors' => $errors,
 ]);
 
-$layout_content = include_template('layout.php', [
-    'content' => $page_content,
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
     'title' => 'Дела в порядке',
 ]);
 
-print($layout_content);
+print($layoutContent);

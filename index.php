@@ -2,37 +2,37 @@
 require_once('init.php');
 
 if (!$user){
-    $page_content = include_template('guest.php', []);
+    $pageContent = includeTemplate('guest.php', []);
 
-    $layout_content = include_template('layout.php', [
-        'content' => $page_content,
+    $layoutContent = includeTemplate('layout.php', [
+        'content' => $pageContent,
         'title' => 'Дела в порядке',
         'user' => false,
         'userName' => ''
     ]);
 
-    print($layout_content);
+    print($layoutContent);
     exit();
 }
 
 $projects = getProjects($link, $userID);
 $tasks = getTasks($link, $userID);
-$project_id = NULL;
+$projectID = NULL;
 
 if (isset($_GET['project_id'])) {
-    $project_id = (int) $_GET['project_id'];
-    if (!has_project_id($project_id, $projects)) {
+    $projectID = (int) $_GET['project_id'];
+    if (!hasProjectID($projectID, $projects)) {
         http_response_code(404);
         exit();
     }
 }
 
-$task_id = NULL;
+$taskID = NULL;
 
 if (isset($_GET['task_id'])) {
-    $task_id = (int) $_GET['task_id'];
-    $task_status = (int) $_GET['check'];
-    $sql = 'UPDATE task SET status = "'. $task_status .'" WHERE id = "' . $task_id . '" ';
+    $taskID = (int) $_GET['task_id'];
+    $taskStatus = (int) $_GET['check'];
+    $sql = 'UPDATE task SET status = "'. $taskStatus .'" WHERE id = "' . $taskID . '" ';
     $result = mysqli_query($link, $sql);
     if ($result) {
         header("Location: index.php");
@@ -40,7 +40,7 @@ if (isset($_GET['task_id'])) {
     }
 }
 
-$show_completed = NULL;
+$showCompleted = NULL;
 
 if (isset($_GET['show_completed']) && (int) $_GET['show_completed'] !== 0) {
     $tasks = getDoneTasks($link, $userID);
@@ -48,11 +48,11 @@ if (isset($_GET['show_completed']) && (int) $_GET['show_completed'] !== 0) {
     $tasks = getTasks($link, $userID);
 }
 
-$tasks_filter = 'all';
+$tasksFilter = 'all';
 if (isset($_GET['task_switch'])) {
-    $tasks_filter = $_GET['task_switch'];
+    $tasksFilter = $_GET['task_switch'];
 
-    switch ($tasks_filter) {
+    switch ($tasksFilter) {
         case 'all':
             $tasks = getTasks($link, $userID);
             break;
@@ -70,20 +70,20 @@ if (isset($_GET['task_switch'])) {
             break;
     }
 }
-$show_completed = (int) $_GET['show_completed'];
+$showCompleted = (int) $_GET['show_completed'];
 
-$page_content = include_template('index.php', [
-    'tasks' => (!empty($project_id)) ? getTasksForCurrentProject($link, $userID, $project_id) : $tasks,
-    'showCompleteTasks' => $show_completed,
-    'tasksFilter' => $tasks_filter,
+$pageContent = includeTemplate('index.php', [
+    'tasks' => (!empty($projectID)) ? getTasksForCurrentProject($link, $userID, $projectID) : $tasks,
+    'showCompleteTasks' => $showCompleted,
+    'tasksFilter' => $tasksFilter,
 ]);
 
-$layout_content = include_template('layout.php', [
-    'content' => $page_content,
+$layoutContent = includeTemplate('layout.php', [
+    'content' => $pageContent,
     'tasks' => $tasks,
     'projects' => $projects,
     'user' => $user,
     'title' => 'Дела в порядке',
 ]);
 //
-print($layout_content);
+print($layoutContent);
