@@ -5,6 +5,7 @@
 *.pdf
 *.psd
 *.sublime*
+uploads
 Thumbs.db
 vendor
 .htaccess

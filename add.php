@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task = $_POST;
     $required = ['name', 'project'];
     $dict = ['name' => 'Название задачи', 'project' => 'Проект', 'date' => 'Дата выполнения'];
+    $file = NULL;
 
     /**
      * Check required fields
@@ -53,6 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES)) {
         $tmpName = $_FILES['preview']['tmp_name'];
         $path = $_FILES['preview']['name'];
+
+        if (!file_exists('uploads')) {
+            mkdir('uploads', 0700, true);
+        }
+
         move_uploaded_file($tmpName, 'uploads/' .$path);
         $file = $path;
     }
@@ -62,8 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      */
     if (empty($errors)) {
         $projectID = get_project_id($link, $userID, $projectName);
-        $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id)
-        VALUES (NOW(), NULL, 0, "'. $taskName .'", "'. $file .'", "'. $deadline .'", '. $projectID .')';
+        $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, "'. $taskName .'", "'. $file .'", "'. $deadline .'", '. $projectID .')';
+//        $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, ?, ?, ?, ?)';
+//
+//        $stmt = dbGetPrepareStmt($link, $sql, [$taskName, $file, $deadline, $projectID]);
+
         $resultTask = mysqli_query($link, $sql);
         if ($resultTask) {
             header("Location: index.php");
