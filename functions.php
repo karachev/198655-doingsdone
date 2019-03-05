@@ -72,23 +72,6 @@ function getProjects($link, $authorId){
 }
 
 /**
- * Get project ID of current user and current project
- * @param $link - Connect to mysql
- * @param $authorId - Current user id
- * @param $projectName - Current project name
- * @return object All project of current user and project name
- */
-function get_project_id($link, $authorId, $projectName){
-    $sql = 'SELECT id FROM project WHERE author_id = ? AND name = ?';
-    $stmt = dbGetPrepareStmt($link, $sql, [$authorId, $projectName]);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $resultFetch = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-    return $resultFetch['0']['id'];
-}
-
-/**
  * Get all tasks for current project and user
  * @param $link - Connect to mysql
  * @param $authorId - Current user id
@@ -191,6 +174,38 @@ function getFilterTaskWithDate($link, $authorId, $filterDate) {
 function getOverdueTasks($link, $authorId, $filterDate) {
     $sql = 'SELECT task.* FROM task LEFT JOIN project ON task.project_id = project.id WHERE author_id = ? AND " '. $filterDate .' " > deadline;';
     $stmt = dbGetPrepareStmt($link, $sql, [$authorId]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+ * Get project with current name for current user
+ * @param $link - Connect to mysql
+ * @param $authorId - Current user id
+ * @param $filterDate - Current project name
+ * @return object Returns project with current name for current user
+ */
+function getProjectWithName($link, $authorId, $projectName) {
+    $sql = 'SELECT * FROM project WHERE author_id = ? AND name = ?;';
+    $stmt = dbGetPrepareStmt($link, $sql, [$authorId ,$projectName]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+/**
+ * Get project with current id for current user
+ * @param $link - Connect to mysql
+ * @param $authorId - Current user id
+ * @param $filterDate - Current project id
+ * @return object Returns project with current id for current user
+ */
+function getProjectWithID($link, $authorId, $id) {
+    $sql = 'SELECT * FROM project WHERE author_id = ? AND id = ?;';
+    $stmt = dbGetPrepareStmt($link, $sql, [$authorId ,$id]);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 

@@ -14,9 +14,11 @@
 
         <select class="form__input form__input--select" name="project" id="project">
             <?php foreach ($projects as $key => $project): ?>
-                <option value="<?= htmlspecialchars($project['name']); ?>"><?= htmlspecialchars($project['name']); ?></option>
+                <option value="<?= $project['id']; ?>"><?= htmlspecialchars($project['name']); ?></option>
             <?php endforeach; ?>
         </select>
+
+        <p class="form__message"><?= !empty($errors['project']) ? $errors['project'] : "";?></p>
     </div>
 
     <div class="form__row">

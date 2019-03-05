@@ -29,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      */
     if (strlen($project['name']) > 128) {
         $errors['name'] = 'Макисмальная длина имени проекта 128 символов';
+    } else if (getProjectWithName($link, $userID, $project['name'])) {
+        $errors['name'] = 'Такой проект уже существует';
     }
 
     /**
