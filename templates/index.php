@@ -23,8 +23,8 @@
 
 <table class="tasks">
     <?php foreach ($tasks as $key => $task): ?>
-        <? if (!$task['isDone'] || $showCompleteTasks): ?>
-            <tr class="tasks__item task <?= $task['isDone'] ? 'task--completed' : ''; ?> <?= $task['date'] && checkTaskDate($task['date']) ? 'task--important' : ''; ?> ">
+        <? if (!$task['status'] || $showCompleteTasks): ?>
+            <tr class="tasks__item task <?= $task['status'] ? 'task--completed' : ''; ?> <?= $task['deadline'] && checkTaskDate($task['deadline']) ? 'task--important' : ''; ?> ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox"

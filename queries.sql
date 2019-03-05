@@ -1,8 +1,8 @@
 -- Добавляет пару пользователей
 INSERT INTO user (date_registration, email, name, password)
-VALUES  ('22.01.2019', 'ivanivanov2019@gmail.com', 'Ваня Иванов', 'qwerty'),
-        ('26.01.2019', 'petrov2019@gmail.com', 'Петр Сергеевич', 'ytrewq'),
-        ('29.01.2019', 'sidorov2019@gmail.com', 'Толик', 'qazwsxedc');
+VALUES  ('22.01.2019', 'zenit@gmail.com', 'Зенит', '$2y$10$gkQc0JMu9DFVoZLBWMuGXOcvl51r.svT3NlxEZnVzCgOOT8Qos6cm'),
+        ('26.01.2019', 'vlada@gmail.com', 'Влада', '$2y$10$MC9hXOH4/pGsqxSpZKgEP.BjrKUqZBcldEttZ4JEEuQmM7vqYbUjC'),
+        ('29.01.2019', 'anton@gmail.com', 'Антон', '$2y$10$tH3YDCZ.825gs2bKxtaJweXWIp4XP24MUTCMiMMspbcQoWBwJQDRa');
 
 -- Добавляет существующий список проектов
 INSERT INTO project (name, author_id) VALUES ('Входящие', 1), ('Учеба', 2), ('Работа', 3), ('Домашние дела', 1), ('Авто', 2);

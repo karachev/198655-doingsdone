@@ -39,6 +39,8 @@
     </div>
 
     <div class="form__row form__row--controls">
+        <p class="error-message <?= empty($errors) ? "hidden" : ""?>">Пожалуйста, исправьте ошибки в форме</p>
+
         <input class="button" type="submit" name="" value="Добавить">
     </div>
 </form>

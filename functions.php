@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Include template
+ * @param $name - Name of the current template
+ * @param $data - Object with parameters passed to layout
+ * @return object Returns the object included template
+ */
 function includeTemplate($name, $data){
     $name = 'templates/' . $name;
     $result = '';
@@ -40,7 +47,7 @@ function getProjectCount($tasks, $project){
  */
 function checkTaskDate($stringTaskDate){
     $taskDate = strtotime($stringTaskDate);
-    $currentDate = time();
+    $currentDate = strtotime('today');
     $diff = $taskDate - $currentDate;
 
     $secondsInHour = 3600;
