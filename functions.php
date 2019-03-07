@@ -202,7 +202,7 @@ function getOverdueTasks($link, $authorId, $filterDate) {
 function addTaskToDatabase($link, $taskName, $file, $deadline, $projectID) {
     $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, ?, ?, ?, ?)';
     $stmt = dbGetPrepareStmt($link, $sql, [$taskName, $file, $deadline, $projectID]);
-    var_dump(mysqli_stmt_execute($stmt));
+
     return mysqli_stmt_execute($stmt);
 }
 
