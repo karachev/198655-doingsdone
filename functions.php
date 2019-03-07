@@ -189,3 +189,34 @@ function getOverdueTasks($link, $authorId, $filterDate) {
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+/**
+ * Add task to database
+ * @param $link - Connect to mysql
+ * @param $taskName - Name of current task
+ * @param $file - Include file for current task
+ * @param $deadline - Deadline for current task
+ * @param $projectID - Project id for current task
+ * @return bool Returns result of insert into database
+ */
+function addTaskToDatabase($link, $taskName, $file, $deadline, $projectID) {
+    $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, ?, ?, ?, ?)';
+    $stmt = dbGetPrepareStmt($link, $sql, [$taskName, $file, $deadline, $projectID]);
+    var_dump(mysqli_stmt_execute($stmt));
+    return mysqli_stmt_execute($stmt);
+}
+
+/**
+ * Add user to database
+ * @param $link - Connect to mysql
+ * @param $email - Email of current user
+ * @param $name - Name of current user
+ * @param $password - Password of current task
+ * @return bool Returns result of insert into database
+ */
+function addUserToDatabase($link, $email, $name, $password) {
+    $sql = 'INSERT INTO user (date_registration, email, name, password) VALUES (NOW(), ?, ?, ?)';
+    $stmt = dbGetPrepareStmt($link, $sql, [$email, $name, $password]);
+
+    return mysqli_stmt_execute($stmt);
+}
