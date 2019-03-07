@@ -74,12 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      * Add user to database
      */
     if (empty($errors)) {
-        $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, "'. $taskName .'", "'. $file .'", "'. $deadline .'", '. $projectID .')';
-//        $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, ?, ?, ?, ?)';
-//
-//        $stmt = dbGetPrepareStmt($link, $sql, [$taskName, $file, $deadline, $projectID]);
-
-        $resultTask = mysqli_query($link, $sql);
+        $projectID = get_project_id($link, $userID, $projectName);
+        $resultTask = addTaskToDatabase($link, $taskName, $file, $deadline, $projectID);
 
         if ($resultTask) {
             header("Location: index.php");

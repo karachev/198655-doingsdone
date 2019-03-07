@@ -64,8 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      * Add user to database
      */
     if (empty($errors)) {
-        $sql = 'INSERT INTO user (date_registration, email, name, password) VALUES (NOW(), "' . $data['email'] . '", "' . $data['name'] . '", "' . $password . '")';
-        $result = mysqli_query($link, $sql);
+        $result = addUserToDatabase($link, $data['email'], $data['name'], $password);
+
         if ($result) {
             header("Location: index.php");
         }
