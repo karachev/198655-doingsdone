@@ -74,7 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      * Add user to database
      */
     if (empty($errors)) {
-        $projectID = get_project_id($link, $userID, $projectName);
         $resultTask = addTaskToDatabase($link, $taskName, $file, $deadline, $projectID);
 
         if ($resultTask) {

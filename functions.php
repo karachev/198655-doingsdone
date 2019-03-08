@@ -224,7 +224,6 @@ function getProjectWithID($link, $authorId, $id) {
 function addTaskToDatabase($link, $taskName, $file, $deadline, $projectID) {
     $sql = 'INSERT INTO task (date_create, date_done, status, name, file, deadline, project_id) VALUES (NOW(), NULL, 0, ?, ?, ?, ?)';
     $stmt = dbGetPrepareStmt($link, $sql, [$taskName, $file, $deadline, $projectID]);
-
     return mysqli_stmt_execute($stmt);
 }
 
@@ -239,6 +238,5 @@ function addTaskToDatabase($link, $taskName, $file, $deadline, $projectID) {
 function addUserToDatabase($link, $email, $name, $password) {
     $sql = 'INSERT INTO user (date_registration, email, name, password) VALUES (NOW(), ?, ?, ?)';
     $stmt = dbGetPrepareStmt($link, $sql, [$email, $name, $password]);
-
     return mysqli_stmt_execute($stmt);
 }

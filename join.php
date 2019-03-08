@@ -65,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      */
     if (empty($errors)) {
         $result = addUserToDatabase($link, $data['email'], $data['name'], $password);
-
         if ($result) {
             header("Location: index.php");
         }
